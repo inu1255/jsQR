@@ -24,16 +24,17 @@ class Matrix {
 }
 
 export function binarize(data: Uint8ClampedArray, width: number, height: number, returnInverted: boolean) {
-  if (data.length !== width * height * 4) {
-    throw new Error("Malformed data passed to binarizer.");
-  }
+	let channel = data.length / width / height
+//   if (data.length !== width * height * 4) {
+//     throw new Error("Malformed data passed to binarizer.");
+//   }
   // Convert image to greyscale
   const greyscalePixels = new Matrix(width, height);
   for (let x = 0; x < width; x++) {
     for (let y = 0; y < height; y++) {
-      const r = data[((y * width + x) * 4) + 0];
-      const g = data[((y * width + x) * 4) + 1];
-      const b = data[((y * width + x) * 4) + 2];
+      const r = data[((y * width + x) * channel) + 0];
+      const g = data[((y * width + x) * channel) + 1];
+      const b = data[((y * width + x) * channel) + 2];
       greyscalePixels.set(x, y, 0.2126 * r + 0.7152 * g + 0.0722 * b);
     }
   }
